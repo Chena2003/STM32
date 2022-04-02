@@ -73,21 +73,33 @@ void USART1_IRQHandler(void)
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE);	
 		ch = USART_ReceiveData(USART1);
 		
-		if(ch == '1')
-			car_flag = 1;
-		else if(ch == '2')
-			car_flag = 2;
-		else if(ch == '3')
-			car_flag = 3;
-		else if(ch == '4')
-			car_flag = 4;
-		else if(ch == '5')
-			car_flag = 5; 
-		else if(ch == '6')
-			car_flag = 6;
-		
-		else if(ch == '7')
-			car_flag = 7;
+//		if(ch == '1')
+//			car_flag = 1;
+//		else if(ch == '2')
+//			car_flag = 2;
+//		else if(ch == '3')
+//			car_flag = 3;
+//		else if(ch == '4')
+//			car_flag = 4;
+//		else if(ch == '5')
+//			car_flag = 5; 
+//		else if(ch == '6')
+//			car_flag = 6;
+//		
+//		else if(ch == '7')
+//			car_flag = 7;
+		USART_SendString("Ok");
+	}
+}
+
+void USART_SendString(const unsigned char *pt)
+{
+	while(*pt)
+	{
+		while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) != SET);//确保发送缓冲区为空，只有发送缓冲区为空才继续发送
+		USART_SendData(USART1, *pt);
+		while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET);//等待发送完成
+		pt++;
 	}
 }
 

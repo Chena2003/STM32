@@ -11,6 +11,7 @@ void usart_exit(void);
 int fputc (int c, FILE * fp);
 void USART1_IRQHandler(void);
 void blueya_Configuation(void);
+void USART_SendString(const unsigned char *pt);
 
 
 #endif
